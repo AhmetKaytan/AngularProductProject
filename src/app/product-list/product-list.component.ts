@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../models/product';
 import { ProductRepository } from '../models/product.repository';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ProductService } from '../services/product.service';
 
 
 @Component({
@@ -12,7 +12,8 @@ import { HttpClient } from '@angular/common/http';
   standalone: true,
   imports: [ProductComponent, CommonModule, RouterModule],
   templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  styleUrl: './product-list.component.css',
+  providers: [ProductService]
 })
 export class ProductListComponent {
 
@@ -20,7 +21,7 @@ export class ProductListComponent {
   selectedProduct:Product | null;
   productRepository: ProductRepository;
 
-  constructor(private route: ActivatedRoute, private http:HttpClient){
+  constructor(private route: ActivatedRoute,private productService:ProductService){
     this.productRepository = new ProductRepository();
   }
 
@@ -29,8 +30,7 @@ export class ProductListComponent {
       if(params["categoryId"]){
         this.products = this.productRepository.getProductsByCategoryId(params["categoryId"]);
       }else{
-        this.http.get<Product[]>('https://ng-shopapp-a0729-default-rtdb.firebaseio.com/products.json')
-          .subscribe(result => {
+        this.productService.getProducts().subscribe(result => {
             const data: Product[] =[];
             for (const key in result){
               this.products.push({...result[key], id:key});
