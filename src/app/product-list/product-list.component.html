@@ -1,6 +1,6 @@
-<!-- <div *ngIf="products.length>0; else noProducts">
+<div *ngIf="products.length>0; else noProducts">
     <ng-template [ngTemplateOutlet]="productList" [ngTemplateOutletContext]="{products:products}"></ng-template>
-</div> -->
+</div>
 
 
 <ng-template #productList let-products="products">
