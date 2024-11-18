@@ -19,24 +19,15 @@ export class ProductListComponent {
 
   products: Product[] = [];
   selectedProduct:Product | null;
-  productRepository: ProductRepository;
 
   constructor(private route: ActivatedRoute,private productService:ProductService){
-    this.productRepository = new ProductRepository();
   }
 
   ngOnInit():void{
     this.route.params.subscribe(params => {
-      if(params["categoryId"]){
-        this.products = this.productRepository.getProductsByCategoryId(params["categoryId"]);
-      }else{
-        this.productService.getProducts().subscribe(result => {
-            const data: Product[] =[];
-            for (const key in result){
-              this.products.push({...result[key], id:key});
-            }
-          });
-      }
+      this.productService.getProducts(params["categoryId"]).subscribe(data =>{
+        this.products = data;
+      })
     });
   }
 
