@@ -16,7 +16,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ProductListComponent {
 
-  products: Product[];
+  products: Product[] = [];
   selectedProduct:Product | null;
   productRepository: ProductRepository;
 
@@ -31,14 +31,10 @@ export class ProductListComponent {
       }else{
         this.http.get<Product[]>('https://ng-shopapp-a0729-default-rtdb.firebaseio.com/products.json')
           .subscribe(result => {
-            
+            const data: Product[] =[];
             for (const key in result){
-              console.log(key);
-              console.log(result[key]);
-              console.log({...result[key], id:key});
+              this.products.push({...result[key], id:key});
             }
-            
-
           });
       }
     });
