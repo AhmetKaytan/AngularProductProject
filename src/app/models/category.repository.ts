@@ -2,9 +2,9 @@ import { Category } from "./category";
 
 export class CategoryRepository{
     private categories: Category[] = [
-        {id:1, name:"Telefon" },
-        {id:2, name:"Bilgisayar" },
-        {id:3, name:"Televizyon" }
+        {id:1, name:"Phone" },
+        {id:2, name:"Computer" },
+        {id:3, name:"Television" }
     ];
 
     getCategories():Category[]{
