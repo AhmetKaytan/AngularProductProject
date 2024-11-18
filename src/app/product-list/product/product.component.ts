@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Product } from '../../models/product';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterOutlet } from '@angular/router';
-import { ProductRepository } from '../../models/product.repository';
+import { ProductService } from '../../services/product.service';
 
 @Component({
   selector: 'product',
@@ -13,16 +13,19 @@ import { ProductRepository } from '../../models/product.repository';
 })
 export class ProductComponent {
   product: Product | undefined;
-  productRepository: ProductRepository;
+  
 
-  constructor (private route: ActivatedRoute){
-    this.productRepository = new ProductRepository();
+  constructor (private route: ActivatedRoute, private productService: ProductService){
+    
   }
 
   ngOnInit():void{
     this.route.params.subscribe(params => {
       const id = params["productId"];
-      this.product = this.productRepository.getProductById(id);
+
+      this.productService.getProductById(id).subscribe(result=>{
+        this.product = {...result, id:id} 
+      });
     });
   }
 }
