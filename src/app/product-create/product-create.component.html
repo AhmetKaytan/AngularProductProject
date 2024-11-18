@@ -23,12 +23,10 @@
         </label>
     </div>
     <div class="mb-3">
-        <label for="categodyId" class="form-label">categody</label>
-        <select #categoryId name="categodyId" id="categodyId" class="form-select">
+        <label for="categoryId" class="form-label">category</label>
+        <select #categoryId name="categoryId" id="categoryId" class="form-select">
             <option value="0">Category</option>
-            <option value="1">Phone</option>
-            <option value="2">Computer</option>
-            <option value="3">Television</option>
+            <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
         </select>
     </div>
     <button type="button" class="btn btn-primary" (click)="saveProduct(name,price,imageUrl,description,isActive,categoryId)">Save Product</button>
