@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "./navbar/navbar.component";
 import { ProductListComponent } from './product-list/product-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { ProductService } from './services/product.service';
 
 
 @Component({
@@ -12,12 +13,13 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   standalone: true,
   imports: [RouterOutlet, NavbarComponent,ProductListComponent, CommonModule, CategoryListComponent, RouterModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  providers: [ProductService]
 })
 export class AppComponent {
   private title = 'Home Page';
 
-  constructor(private http:HttpClient){ }
+  constructor(private http:HttpClient, private productService: ProductService){ }
 
   getTitle(){
     return this.title;
@@ -25,15 +27,14 @@ export class AppComponent {
 
   createProduct(){
     const product = {id:1, 
-      name:"iphone 22", 
+      name:"iphone 23", 
       price: 20000, 
-      imageUrl: "3.jpeg", 
+      imageUrl: "1.jpeg", 
       description:"iyi telefon", 
       isActive: true, 
-      categodyId: 1
+      categodyId: 2
     };
 
-    this.http.post('https://ng-shopapp-a0729-default-rtdb.firebaseio.com/products.json', product)
-      .subscribe(data => console.log(data));
+    this.productService.createProduct(product).subscribe(data => console.log(data));
   }
 }
