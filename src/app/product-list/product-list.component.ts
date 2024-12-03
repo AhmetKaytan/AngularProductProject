@@ -10,7 +10,7 @@ import { ProductService } from '../services/product.service';
 @Component({
   selector: 'product-list',
   standalone: true,
-  imports: [ProductComponent, CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './product-list.component.html',
   styleUrl: './product-list.component.css',
   providers: [ProductService]
@@ -18,15 +18,17 @@ import { ProductService } from '../services/product.service';
 export class ProductListComponent {
 
   products: Product[] = [];
-  selectedProduct:Product | null;
+  loading:boolean = false;
 
   constructor(private route: ActivatedRoute,private productService:ProductService){
   }
 
   ngOnInit():void{
     this.route.params.subscribe(params => {
+      this.loading = true;
       this.productService.getProducts(params["categoryId"]).subscribe(data =>{
         this.products = data;
+        this.loading = false;
       })
     });
   }

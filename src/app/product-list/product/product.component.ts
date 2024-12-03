@@ -7,13 +7,13 @@ import { ProductService } from '../../services/product.service';
 @Component({
   selector: 'product',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [CommonModule],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
 export class ProductComponent {
   product: Product | undefined;
-  
+  loading:boolean = false;  
 
   constructor (private route: ActivatedRoute, private productService: ProductService){
     
@@ -22,9 +22,11 @@ export class ProductComponent {
   ngOnInit():void{
     this.route.params.subscribe(params => {
       const id = params["productId"];
+      this.loading = true;
 
       this.productService.getProductById(id).subscribe(result=>{
         this.product = {...result, id:id} 
+        this.loading = false;
       });
     });
   }
