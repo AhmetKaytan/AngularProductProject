@@ -1,36 +1,38 @@
-<h3>Product Create</h3>
-<form>
+<h3>Ürün ekle</h3>
+<form #form="ngForm" (ngSubmit)="saveProduct(form)">
     <div class="alert alert-danger" *ngIf="error">
         {{error}}
     </div>
     <div class="mb-3">
-        <label for="name" class="form-label">Name</label>
-        <input #name type="text" name="name" id="name" class="form-control">
+        <label for="name" class="form-label">İsim</label>
+        <input required minlength="5" [(ngModel)]="model.name" #name="ngModel" type="text" name="name" id="name" class="form-control">
+        <div class="text-danger mt-1" *ngIf="name.invalid && name.touched">Ürün isimi en az 5 karakter uzunluğunda olmalıdır!</div>
     </div>
     <div class="mb-3">
-        <label for="price" class="form-label">price</label>
-        <input #price type="text" name="price" id="price" class="form-control">
+        <label for="price" class="form-label">Fiyat</label>
+        <input [(ngModel)]="model.price" required type="number" min="0" max="9999999" #price="ngModel" name="price" id="price" class="form-control">
+        <div class="text-danger mt-1" *ngIf="price.invalid && price.touched">Ürün fiyatı olarak negatif değer giremezsiniz!</div>
     </div>
     <div class="mb-3">
-        <label for="imageUrl" class="form-label">imageUrl</label>
-        <input #imageUrl type="text" name="imageUrl" id="imageUrl" class="form-control">
+        <label for="imageUrl" class="form-label">Resim</label>
+        <input required="" [(ngModel)]="model.imageUrl" type="text" name="imageUrl" id="imageUrl" class="form-control">
     </div>
     <div class="mb-3">
-        <label for="description" class="form-label">description</label>
-        <textarea #description name="description" id="description" class="form-control"></textarea>
+        <label for="description" class="form-label">Açıklama</label>
+        <textarea [(ngModel)]="model.description" name="description" id="description" class="form-control"></textarea>
     </div>
     <div class="form-check mb-3">
-        <input #isActive class="form-check-input" type="checkbox" name="isActive" id="isActive">
+        <input [(ngModel)]="model.isActive" class="form-check-input" type="checkbox" name="isActive" id="isActive">
         <label class="form-check-label" for="isActive">
-            isActive
+            Stokta
         </label>
     </div>
     <div class="mb-3">
-        <label for="categoryId" class="form-label">category</label>
-        <select #categoryId name="categoryId" id="categoryId" class="form-select">
-            <option value="0">Category</option>
+        <label for="categoryId" class="form-label">Kategori</label>
+        <select [(ngModel)]="model.categoryId" name="categoryId" id="categoryId" class="form-select">
+            <option value="0">Kategori</option>
             <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
         </select>
     </div>
-    <button type="button" class="btn btn-primary" (click)="saveProduct(name,price,imageUrl,description,isActive,categoryId)">Save Product</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">Ürünü Kaydet</button>
 </form>

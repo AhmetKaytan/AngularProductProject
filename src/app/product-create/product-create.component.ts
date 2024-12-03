@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import { CategoryService } from '../services/category.service';
 import { Category } from '../models/category';
 import { CommonModule } from '@angular/common';
+import { FormsModule, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-product-create',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './product-create.component.html',
   styleUrl: './product-create.component.css',
   providers:[CategoryService]
@@ -17,7 +18,19 @@ export class ProductCreateComponent {
 
   categories:Category[] = [];
   error:string = "";
-  
+  model:any = {
+    name: "iphone17",
+    price: "20000",
+    categoryId: "0"
+  };
+  //two way binding
+
+  //ngform => form
+  //valid-invalid
+  //pristine-dirty
+  //touched-untouched
+
+
   constructor(private productService: ProductService, private categoryService:CategoryService, private router:Router){
 
   }
@@ -28,49 +41,37 @@ export class ProductCreateComponent {
     });
   }
 
-  saveProduct(name:any,price:any,imageUrl:any,description:any,isActive:any,categoryId:any){
-
-    //form validations
-    if (name.value == "" || name.value.length < 3 ){
-      this.error = "ürün ismi en az 3 karakter olmalıdır!";
-      return;
-    }
-
-    if (price.value == ""){
-      this.error = "ürün fiyatı boş olamaz!";
-      return;
-    }
-
-    if (imageUrl.value == ""){
-      this.error = "resim bilgisi giriniz!";
-      return;
-    }
-
+  saveProduct(form:NgForm){
     const extensions = ["jpeg","jpg","png"];
-    const extension = imageUrl.value.split(".").pop();
+    const extension = this.model.imageUrl.split(".").pop();
 
     if (extensions.indexOf(extension) == -1){
       this.error = "resim uzantısı sadece .jpeg , .jpg veya .png olabilir!";
       return;
     }
 
-    if (categoryId.value == 0){
+    if (this.model.categoryId == 0){
       this.error = "kategori seçmelisiniz!";
       return;
     }
 
     const product = {
       id:1, 
-      name:name.value, 
-      price: price.value, 
-      imageUrl: imageUrl.value, 
-      description:description.value, 
-      isActive: isActive.checked, 
-      categoryId: categoryId.value
+      name:this.model.name, 
+      price: this.model.price, 
+      imageUrl: this.model.imageUrl, 
+      description:this.model.description, 
+      isActive: this.model.isActive, 
+      categoryId: this.model.categoryId
     };
 
-    this.productService.createProduct(product).subscribe(data => {
-      this.router.navigate(['/products']);
-    });
+
+    if (form.valid){
+      this.productService.createProduct(product).subscribe(data => {
+        this.router.navigate(['/products']);
+      });
+    }else{
+      this.error = "Formunuzda hata bulunmaktadır!";
+    }
   }
 }
