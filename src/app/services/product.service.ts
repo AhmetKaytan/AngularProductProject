@@ -20,7 +20,7 @@ export class ProductService{
                     const products: Product[] = [];
                     for (const key in data){
                         if (categoryId){
-                            if(categoryId == data[key].categodyId){
+                            if(categoryId == data[key].categoryId){
                                 products.push({...data[key], id:key});
                             }
                         }else{

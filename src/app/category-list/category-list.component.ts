@@ -3,23 +3,29 @@ import { Category } from '../models/category';
 import { CategoryRepository } from '../models/category.repository';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CategoryService } from '../services/category.service';
 
 @Component({
   selector: 'category-list',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './category-list.component.html',
-  styleUrl: './category-list.component.css'
+  styleUrl: './category-list.component.css',
+  providers: [CategoryService]
 })
 export class CategoryListComponent {
 
   categories: Category[];
   selectedCategory: Category | null;
-  categoryRepository:CategoryRepository;
   
-  constructor(){
-    this.categoryRepository = new CategoryRepository();
-    this.categories = this.categoryRepository.getCategories();
+  constructor(private categoryService:CategoryService){
+
+  }
+
+  ngOnInit(): void{
+    this.categoryService.getCategories().subscribe(data =>{
+      this.categories = data
+    });
   }
 
   displayAll = true;
