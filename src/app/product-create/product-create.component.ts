@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class ProductCreateComponent {
 
   categories:Category[] = [];
+  
   constructor(private productService: ProductService, private categoryService:CategoryService, private router:Router){
 
   }
@@ -26,7 +27,8 @@ export class ProductCreateComponent {
     });
   }
 
-  saveProduct(name:any,price:any,imageUrl:any,description:any,isActive:any,categodyId:any){
+  saveProduct(name:any,price:any,imageUrl:any,description:any,isActive:any,categoryId:any){
+
 
     const product = {
       id:1, 
@@ -35,7 +37,7 @@ export class ProductCreateComponent {
       imageUrl: imageUrl.value, 
       description:description.value, 
       isActive: isActive.checked, 
-      categodyId: categodyId
+      categoryId: categoryId.value
     };
 
     this.productService.createProduct(product).subscribe(data => {

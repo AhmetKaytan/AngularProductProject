@@ -9,7 +9,7 @@ export class CategoryService {
   constructor(private http:HttpClient) { }
 
   getCategories():Observable<Category[]>{
-    return this.http.get<Category[]>(this.url+ "categories.json")
+    return this.http.get<Category[]>(this.url + "categories.json")
       .pipe(
         map(data =>{
           const categories:Category[] = [];

@@ -5,5 +5,5 @@ export interface Product {
     imageUrl:string;
     description:string;
     isActive: boolean;
-    categodyId: number
+    categoryId: number
 }
