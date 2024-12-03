@@ -16,6 +16,7 @@ import { CommonModule } from '@angular/common';
 export class ProductCreateComponent {
 
   categories:Category[] = [];
+  error:string = "";
   
   constructor(private productService: ProductService, private categoryService:CategoryService, private router:Router){
 
@@ -29,6 +30,34 @@ export class ProductCreateComponent {
 
   saveProduct(name:any,price:any,imageUrl:any,description:any,isActive:any,categoryId:any){
 
+    //form validations
+    if (name.value == "" || name.value.length < 3 ){
+      this.error = "ürün ismi en az 3 karakter olmalıdır!";
+      return;
+    }
+
+    if (price.value == ""){
+      this.error = "ürün fiyatı boş olamaz!";
+      return;
+    }
+
+    if (imageUrl.value == ""){
+      this.error = "resim bilgisi giriniz!";
+      return;
+    }
+
+    const extensions = ["jpeg","jpg","png"];
+    const extension = imageUrl.value.split(".").pop();
+
+    if (extensions.indexOf(extension) == -1){
+      this.error = "resim uzantısı sadece .jpeg , .jpg veya .png olabilir!";
+      return;
+    }
+
+    if (categoryId.value == 0){
+      this.error = "kategori seçmelisiniz!";
+      return;
+    }
 
     const product = {
       id:1, 
