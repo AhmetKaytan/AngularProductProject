@@ -33,7 +33,7 @@ export class ProductService{
                 tap(data =>{
                     console.log(data);
                 }),
-                delay(1000)
+                delay(500)
             );
     }
 

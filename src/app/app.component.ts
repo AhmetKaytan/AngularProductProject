@@ -11,7 +11,7 @@ import { ProductService } from './services/product.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent,ProductListComponent, CommonModule, CategoryListComponent, RouterModule],
+  imports: [RouterOutlet, NavbarComponent, CommonModule, CategoryListComponent, RouterModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [ProductService]
