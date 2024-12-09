@@ -12,16 +12,22 @@
                 <li class="nav-item">
                     <a routerLink="/products" class="nav-link">Ürünler</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="isAuthenticated" class="nav-item">
                     <a routerLink="/products/create" class="nav-link">Ürün Oluştur</a>
                 </li>
-                <li class="nav-item">
+                <li *ngIf="isAuthenticated" class="nav-item">
                     <a routerLink="/categories/create" class="nav-link">Kategori Oluştur</a>
                 </li>
             </ul>
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a routerLink="/auth" class="nav-link">Hesap</a>
+                <li *ngIf="!isAuthenticated" class="nav-item">
+                    <a routerLink="/auth" class="nav-link">Giriş Yap</a>
+                </li>
+                <li *ngIf="!isAuthenticated" class="nav-item">
+                    <a routerLink="/auth" class="nav-link">Kayıt Ol</a>
+                </li>
+                <li *ngIf="isAuthenticated" class="nav-item">
+                    <a routerLink="/auth" class="nav-link">Çıkış</a>
                 </li>
             </ul>
         </div>

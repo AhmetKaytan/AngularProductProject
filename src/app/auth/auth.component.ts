@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthResponse } from '../models/auth-response';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -14,7 +15,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AuthComponent {
 
-  constructor(private authService:AuthService){
+  constructor(private authService:AuthService, private router: Router){
 
   }
   isLoginMode: boolean = true;
@@ -44,10 +45,10 @@ export class AuthComponent {
 
     authResponse.subscribe({
 
-      next: (response)=>{
+      next: ()=>{
         this.loading = false;
         this.error = "";
-        console.log(response);
+        this.router.navigate(["/"]);
       },
 
       error: (err)=>{

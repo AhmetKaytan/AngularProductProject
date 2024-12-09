@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthResponse } from '../models/auth-response';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, Subject, tap, throwError } from 'rxjs';
 import { User } from '../models/user';
 
 
@@ -12,6 +12,7 @@ import { User } from '../models/user';
 export class AuthService {
 
   api_key= "";
+  user = new Subject<User>();
 
   constructor(private http: HttpClient) { }
 
@@ -30,7 +31,7 @@ export class AuthService {
           response.idToken,
           expirationDate
         );
-        console.log(user);
+        this.user.next(user);
       }),
       catchError(this.handleError)
     );
@@ -50,7 +51,7 @@ export class AuthService {
           response.idToken,
           expirationDate
         );
-        console.log(user);
+        this.user.next(user);
       }),
       catchError(this.handleError)
     );
