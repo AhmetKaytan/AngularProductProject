@@ -53,9 +53,6 @@ export class AuthComponent {
       error: (err)=>{
         this.loading = false;
         this.error = err;
-        
-
-        console.log(err);
       }
     });
   }
