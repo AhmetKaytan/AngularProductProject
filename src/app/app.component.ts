@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -6,6 +6,7 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { HttpClient } from '@angular/common/http';
 import { ProductService } from './services/product.service';
+import { AuthService } from './services/auth.service';
 
 
 @Component({
@@ -16,13 +17,13 @@ import { ProductService } from './services/product.service';
   styleUrl: './app.component.css',
   providers: [ProductService]
 })
-export class AppComponent {
-  private title = 'Home Page';
+export class AppComponent implements OnInit {
 
-  constructor(private http:HttpClient, private productService: ProductService){ }
+  constructor(private authService: AuthService){ }
 
-  getTitle(){
-    return this.title;
+  ngOnInit(): void {
+      this.authService.autoLogin();
   }
+
 
 }
