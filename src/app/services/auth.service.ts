@@ -43,6 +43,11 @@ export class AuthService {
     );
   }
 
+  logout(){
+    this.user.next(null);
+    localStorage.removeItem("user");
+  }
+
   autoLogin(){
     if (localStorage.getItem("user") == null){
       return;

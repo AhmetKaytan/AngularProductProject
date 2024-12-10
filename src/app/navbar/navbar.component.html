@@ -12,10 +12,10 @@
                 <li class="nav-item">
                     <a routerLink="/products" class="nav-link">Ürünler</a>
                 </li>
-                <li *ngIf="isAuthenticated" class="nav-item">
+                <li *ngIf="isAdmin" class="nav-item">
                     <a routerLink="/products/create" class="nav-link">Ürün Oluştur</a>
                 </li>
-                <li *ngIf="isAuthenticated" class="nav-item">
+                <li *ngIf="isAdmin" class="nav-item">
                     <a routerLink="/categories/create" class="nav-link">Kategori Oluştur</a>
                 </li>
             </ul>
@@ -27,7 +27,7 @@
                     <a routerLink="/auth" class="nav-link">Kayıt Ol</a>
                 </li>
                 <li *ngIf="isAuthenticated" class="nav-item">
-                    <a routerLink="/auth" class="nav-link">Çıkış</a>
+                    <a (click)="logout()" routerLink="/auth" class="nav-link">Çıkış</a>
                 </li>
             </ul>
         </div>
