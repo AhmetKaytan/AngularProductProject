@@ -6,13 +6,18 @@ import { ProductCreateComponent } from './product-create/product-create.componen
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { AuthComponent } from './auth/auth.component';
 import { AdminGuard } from './guards/admin-guard';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 export const routes: Routes = [
-    {path:'', component:HomeComponent },
+    {path:'home', component:HomeComponent },
+    {path:'', redirectTo: '/home', pathMatch: 'full' },
+    {path: 'products', loadChildren: () => import('./product-list/product-list.component').then(m=>m.ProductListComponent) },
     {path: 'products/create', component:ProductCreateComponent, canActivate: [AdminGuard]},
     {path: 'categories/create', component:CategoryCreateComponent, canActivate: [AdminGuard]},
     {path:'products', component:ProductListComponent },
     {path:'products/:productId', component:ProductComponent },
     {path: 'products/category/:categoryId', component:ProductListComponent},
-    {path: 'auth', component:AuthComponent}
+    {path: 'auth', component:AuthComponent},
+    {path: '**', component:NotFoundComponent}
+
 ];
